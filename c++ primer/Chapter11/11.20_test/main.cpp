@@ -1,0 +1,52 @@
+#include <iostream>
+#include <map>
+#include <set>
+#include <string>
+#include <algorithm>
+
+void format_word(std::string &word)
+{
+    if (!word.empty())
+    {
+        for (std::string::size_type i = 0; i != word.size();)
+        {
+            if (isalpha(word[i]))
+            {
+                word[i] = tolower(word[i]);
+                ++i;
+            }
+            else if (ispunct(word[i]))
+                word.erase(i, 1);
+            else
+            {
+                ++i;
+                continue;
+            }
+        }
+    }
+}
+
+int main()
+{
+    std::map<std::string, size_t> words_map;
+    std::string word;
+    std::set<std::string> not_words_set{"the", "a", "an", "and", "or", "but", "is", "are", "was", "were", "be", "to", "of", "in", "that", "it"};
+    while (std::cin >> word)
+    {
+        format_word(word);
+        if (not_words_set.find(word) == not_words_set.end())
+        {
+            auto iter = words_map.insert({word, 1});
+            if (!iter.second)
+            {
+                ++(iter.first->second);
+            }
+        }
+    }
+
+    for (auto i : words_map)
+        std::cout << i.first << " occurs " << i.second << " times." << "\n";
+    std::cout << std::endl;
+
+    return 0;
+}

@@ -1,0 +1,71 @@
+#include "StrBlobPtr.h"
+#include "StrBlob.h"
+#include "ConstStrBlobPtr.h"
+
+void StrBlob::check(const size_type i, const std::string str) const
+{
+    if (i > this->sp->size())
+        throw std::out_of_range(str);
+}
+
+void StrBlob::push_back(const std::string &str)
+{
+    if (!sp)
+        sp = std::make_shared<std::vector<std::string>>();
+    sp->push_back(str);
+}
+
+void StrBlob::pop_back()
+{
+    check(0, "pop_back on empty StrBlob");
+    sp->pop_back();
+}
+
+std::string &StrBlob::back()
+{
+    check(0, "back on empty StrBlob");
+    return sp->back();
+}
+
+std::string &StrBlob::front()
+{
+    check(0, "front on empty StrBlob");
+    return sp->front();
+}
+
+const std::string &StrBlob::back() const
+{
+    check(0, "back on empty StrBlob");
+    return sp->back();
+}
+
+const std::string &StrBlob::front() const
+{
+    check(0, "front on empty StrBlob");
+    return sp->front();
+}
+
+StrBlobPtr StrBlob::begin()
+{
+    return StrBlobPtr(*this);
+}
+
+StrBlobPtr StrBlob::end()
+{
+    return StrBlobPtr(*this, this->sp->size());
+}
+
+ConstStrBlobPtr StrBlob::begin() const
+{
+    return ConstStrBlobPtr(*this);
+}
+
+ConstStrBlobPtr StrBlob::end() const
+{
+    return ConstStrBlobPtr(*this, this->sp->size());
+}
+std::string &StrBlob::operator[](size_type i) const
+{
+    check(i, "subscript out of range");
+    return (*sp)[i];
+}
