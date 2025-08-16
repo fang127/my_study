@@ -8,29 +8,20 @@
 class Solution
 {
 public:
+    // 时间复杂度：O(n)
+    // 空间复杂度：O(1)
     int removeElement(vector<int> &nums, int val)
     {
-        int k = 0, j = nums.size() - 1;
-        while (k <= j)
+        int slow = 0, fast = 0;
+        for (; fast < nums.size(); ++fast)
         {
-            if (nums[j] == val)
+            if (nums[fast] != val)
             {
-                --j;
-                continue;
-            }
-
-            if (nums[k] == val)
-            {
-                nums[k] = nums[j];
-                ++k;
-                --j;
-            }
-            else
-            {
-                ++k;
+                nums[slow++] = nums[fast];
             }
         }
-        return k;
+
+        return slow;
     }
 };
 // @lc code=end
