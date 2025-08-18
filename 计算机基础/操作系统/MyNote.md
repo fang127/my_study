@@ -408,3 +408,208 @@ windows操作系统完整的初始化程序在 “根目录/windows/Boot”下�
 响应时间指从用户提交请求到首次产生响应所用的时间
 ### 7.总结
 ![alt text](/操作系统/picture/{D4F69B51-E08B-41EE-9AF1-41805C1ADDDE}.png)
+
+## 十三、调度算法（上）
+### 算法思想
+1. 先来先服务（FCFS，First Come First Serve）
+![alt text](/操作系统/picture/{98C22562-FB3B-4FDF-AD4A-31513CF409FE}.png)
+> 可以看见P3的带权周转时间很大，为8，所以体验很差
+- 总结
+![alt text](/操作系统/picture/{D133FE05-6858-4539-A968-C0BC7FCC7291}.png)
+2. 短作业优先（SJF，Shortest Job First）
+- 非抢占式
+![alt text](/操作系统/picture/{B9336E03-B615-4741-9557-BF18DC4EF1CF}.png)
+- 抢占式
+![alt text](/操作系统/picture/{9597D6DB-0A6A-4E78-9D39-30D3CA6F881F}.png)
+- 注意  
+![alt text](/操作系统/picture/{076DA7CD-9C3B-4BDE-940D-B8FB3AFD1B5D}.png)
+- 总结
+![alt text](/操作系统/picture/{B31FF026-CA96-4A9C-9E2C-56630B8D0E40}.png)
+3. 对FCFS和SJF两种算法的思考
+![alt text](/操作系统/picture/{20FACC2D-D0AC-44BE-A8DB-AF7118F14C8A}.png)
+4. 高响应比优先（HRRN,Hightest Response Ratio Next）
+![alt text](/操作系统/picture/{F621F7A9-929C-4647-ABBA-35BB0904349B}.png)
+- 总结
+![alt text](/操作系统/picture/{7A6ABE32-34A3-4788-BA7E-B486227FEB85}.png)
+### 总结
+![alt text](/操作系统/picture/{6BCA20CC-C8F5-40F0-9F89-AC9E69AEB654}.png)
+
+## 十四、调度算法（下）
+### 算法思想
+1. 时间片轮转（RR，Round-Robin）
+![alt text](/操作系统/picture/{51BEDA8C-28DA-4272-9BA1-2773A1ADD5A2}.png)
+![alt text](/操作系统/picture/{190524AA-8644-4E29-960B-3A0300E568F0}.png)
+- 总结
+![alt text](/操作系统/picture/{A10EEF74-A670-4BDD-964E-A004E2032340}.png)
+2. 优先级调度算法
+- 非抢占式
+![alt text](/操作系统/picture/{C8F6EC3C-251E-447F-BF92-3388A2FB2E84}.png)
+- 抢占式
+![alt text](/操作系统/picture/{D529C978-ED4A-411F-A88C-82DF382F19CD}.png)
+- 补充
+![alt text](/操作系统/picture/{16874959-4FD9-4932-9C6C-5B897B342CD3}.png)
+- 总结
+![alt text](/操作系统/picture/{F3E54D7A-33B1-45B2-9B99-3ED0AB428B29}.png)
+
+> ![alt text](/操作系统/picture/{5C5C3480-206E-4581-8AD9-5C003D2A8E0B}.png)
+
+3. 多级反馈队列调度算法
+![alt text](/操作系统/picture/{ABDF3CE7-4BA2-4912-881D-EA6B1B419F59}.png)
+- 总结
+![alt text](/操作系统/picture/{89CC4402-0DFF-4ACE-B9D5-E513B211EDA1}.png)
+### 总结
+![alt text](/操作系统/picture/{88C69D1B-58C3-4170-A39E-CC6D31DA9834}.png)
+
+## 十五、多级队列调度算法
+![alt text](/操作系统/picture/{A2EDD2D5-EFF6-4492-B73C-DADE0C86B0E3}.png)
+
+## 十六、多处理机调度
+### 多处理机调度相对单处理机调度面临的问题
+![alt text](/操作系统/picture/{061DDA1A-FE0B-4EA7-805D-1F3448B4CCD6}.png)
+![alt text](/操作系统/picture/{2DD721F3-37A3-4A85-B6AA-4676CC15DC6D}.png)
+### 解决
+1. 公共就绪队列
+![alt text](/操作系统/picture/{1D04BA84-2475-4391-A41E-AB66CA674205}.png)
+2. 私有就绪队列
+![alt text](/操作系统/picture/{B66556E0-A6A9-48CC-B590-E9D8A9811CD3}.png)
+![alt text](/操作系统/picture/{0DA35224-E953-4440-8464-995474956A31}.png)
+> 私有就绪队列天然地实现了“处理机亲和性”，但是在处理负载均衡时，会牺牲一部分亲和性，这时，同样可以采用硬亲和地策略，有进程进行系统调用，保证进程地亲和性。
+### 总结
+![alt text](/操作系统/picture/{18EFB367-F9D0-4C71-A8E3-9E5A6558220F}.png)
+
+## 十七、进程同步、互斥
+知识点回顾：进程具有异步性地特征，即各并发执行的进程以各自独立的、不可预知的速度向前推进。
+![alt text](/操作系统/picture/{3B369CBC-295B-45CD-900B-30261C6DD6A7}.png)
+
+### 进程同步
+![alt text](/操作系统/picture/{23817294-205B-4CEB-AD65-F46E5F322AE9}.png)
+### 进程互斥
+![alt text](/操作系统/picture/{4BED9824-9A4D-41D7-A34B-3C9BC61B4573}.png)
+![alt text](/操作系统/picture/{49680E96-2871-443F-B191-D7871E05B5A0}.png)
+![alt text](/操作系统/picture/{D7540A26-C39F-45D1-91A9-077FFC937FBC}.png)
+### 总结
+![alt text](/操作系统/picture/{656098A7-C3F4-4485-AE0D-D2E8CA1E33F8}.png)
+
+## 十八、进程互斥的软件实现方法
+没有进程互斥机制的后果：
+![alt text](/操作系统/picture/{32C5881D-CC53-4325-978A-90D7B69F0027}.png)
+### 1.单标志法
+![alt text](/操作系统/picture/{FAAD3AEF-28A9-48E4-A05A-7EC4EAEEBE2F}.png)
+> 缺点：违背“空闲让进”的原则。
+### 2.双标志先检查法
+![alt text](/操作系统/picture/{77EFDEEA-FD97-4544-A389-247D428C192D}.png)
+> 缺点：违反“忙着等待”原则。
+### 3.双标志后检查法
+![alt text](/操作系统/picture/{6848FA0A-8B0A-4E31-841E-DFFE8974AC93}.png)
+> 缺点：违背了“空闲让进”和“有限等待”原则，会因各进程都长期无法访问临界资源而产生“饥饿”现象。
+### 4.Peterson算法
+![alt text](/操作系统/picture/{FBD28B02-8B9E-44DC-AA2E-E82B67A05DBB}.png)
+> Peterson算法利用软件方法解决了进程互斥的问题，遵循了空闲让进，忙则等待、有限等待三个原则，但依然未遵守让权等待的原则。
+### 5.总结
+![alt text](/操作系统/picture/{992487B1-6921-4CE7-A7F7-DEAE46BD3C10}.png)
+
+## 十九、进程互斥的硬件实现方法
+### 1.中断屏蔽方法
+![alt text](/操作系统/picture/{6222D1B6-63AE-4B40-8B1F-99ADB293E15A}.png)
+### 2.TestAndSet方法
+![alt text](/操作系统/picture/{EEC91189-2DF1-49F6-9F07-A02E379D1735}.png)
+### 3.Swap指令
+![alt text](/操作系统/picture/{524D109D-DD1E-483B-9506-F003FCCA8C19}.png)
+### 4.总结
+![alt text](/操作系统/picture/{FFCC68D4-57E8-48A3-A73E-6B0E3E8CACE3}.png)
+
+## 二十、互斥锁
+![alt text](/操作系统/picture/{7F07215A-879F-42A4-81E4-7EF954ED6432}.png)
+![alt text](/操作系统/picture/{1BC3751D-4067-4D20-ADC9-74CB700FDD5C}.png)
+
+## 二十一、信号量机制
+![alt text](/操作系统/picture/{FF518637-96D3-4B9B-A272-4CC607E519F0}.png)
+### 1.信号量机制定义
+![alt text](/操作系统/picture/{9702377A-4E02-4291-BE55-5121792F10E2}.png)
+1. 整型信号量
+用一个整数表示系统资源的变量，用来表示系统中某种资源的数量
+~~~c++
+// eg：某计算机系统只要一台打印机
+int S=1;
+void wait(int &S){ //wait原语，相当于：进入区
+  while(S<=0); //如果资源数不够，就一直循环等待
+  S=S-1;    //如果资源数够，则占用一个资源
+}
+​
+void signal(int &S){//signal原语，相当于“退出区”
+  S=S+1;    //使用完资源后，在退出区释放资源
+}
+
+进程P0：
+wait(S); // 进入区，申请资源
+{}// 使用打印机资源代码
+signal(S) // 退出区，释放资源
+
+进程P1：
+wait(S); // 进入区，申请资源
+{}// 使用打印机资源代码
+signal(S) // 退出区，释放资源
+
+/*
+   ......其余进程
+*/
+
+进程Pn：
+wait(S); // 进入区，申请资源
+{}// 使用打印机资源代码
+signal(S) // 退出区，释放资源
+~~~
+> wait原语，“检查”和“上锁”一气呵成，避免并发、异步导致的问题
+> 缺点：可能会出现盲等。
+2. 记录型信号量
+记录型数据结构表示的信号量
+~~~c++
+//记录型信号量的定义
+typedef struct{
+  int value;
+  struct process *L;
+} semaphore;
+//某进程需要使用资源时，通过wait原语申请
+void wait (semaphore S){
+  S.value--;
+  if(S.value<0){
+    block (S.L);//将该进程加入到等待队列中，置为阻塞态
+ }
+}
+//进程使用完资源后，通过signal原语释放
+void signal (semaphore S){
+  S.value++;
+  if(S.value<=0){ //s.value为负数，说明有|value|个阻塞态的进程
+    wakeup(S.L); // 唤醒等待队列中阻塞态进程
+ }
+}
+~~~
+> 除非特别说明，否则默认S为记录型信号量
+> ![alt text](/操作系统/picture/{2B7C71F6-D77F-4FD2-9DEF-3B3E70193257}.png)
+
+### 2.总结
+![alt text](/操作系统/picture/{6A57FAFC-709D-4010-8848-24B1EF38BFFF}.png)
+
+## 二十二、用信号量机制实现进程互斥、同步、前驱关系
+![alt text](/操作系统/picture/{8B93164C-6033-4CB4-8193-3FDD3796FD8A}.png)
+### 1.实现进程互斥
+![alt text](/操作系统/picture/{CD25CC5F-D613-40DB-9B3A-7143B3D05605}.png)
+### 2.实现进程同步
+![alt text](/操作系统/picture/{F1ECD47D-EDD5-40A8-8330-B3E98C189E8F}.png)
+### 3.实现前驱关系
+![alt text](/操作系统/picture/{13C46257-916E-44F0-946B-E6A5C79B4545}.png)
+### 4.总结
+![alt text](/操作系统/picture/{00BA714B-6624-4BFA-897F-CB683D9EC42D}.png)
+
+## 二十三、生产者消费者问题
+### 问题描述
+![alt text](/操作系统/picture/{F8229727-22A4-4F80-AC55-F7E6B982E9CB}.png)
+### 问题实现
+![alt text](/操作系统/picture/{32545A89-511B-4E65-AB9F-5C3D0F475CBD}.png)
+### 思考
+![alt text](/操作系统/picture/{435C2832-86C9-4F6B-9940-3ACC3780545D}.png)
+> 要保证临界区代码简短，避免将生产产品和使用产品放入临界区，放入临界区会不利于各进程并发使用临界区资源，会对性能造成影响
+### 总结
+![alt text](/操作系统/picture/{0DC2F21F-2C5C-4CE6-A178-1793B1F190B7}.png)
+
+## 二十四、多生产者、多消费者问题
