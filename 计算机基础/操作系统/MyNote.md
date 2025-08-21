@@ -1027,3 +1027,202 @@ Pi(){     //i号哲学家的进程
     ![alt text](/操作系统/picture/{70E4997D-15D0-456A-AD4B-12051C04009B}.png)
 ### 总结
 ![alt text](/操作系统/picture/{6645800E-7372-4078-A0A4-A762259DB661}.png)
+
+# 第四章、文件管理
+
+## 一、初始文件管理
+文件--就是一组有意义的信息/数据集合，文件也属于系统资源。  
+> 计算机中存放了各种各样的文件，一个文件有哪些属性？
+  - 文件名（同一目录下不允许有重名文件）、标识符（一个系统内的各文件标识符唯一，对用户来说没有可读性，只是操作系统用于区分各个文件的内部名称）、类型、位置、大小、创建时间、上次修改时间、文件所有者信息、保护信息（对文件进程保护的访问控制信息）
+> 文件内部的数据应该怎么组织起来
+  - 1. 无结构文件
+  - 2. 有结构文件
+    ![alt text](/操作系统/picture/{4D45962B-A633-4CD9-82C0-E0A991A94B34}.png)
+> 文件之间又应该怎么组织起来
+  - 通过目录组织起来，目录文件也是有结构文件
+    ![alt text](/操作系统/picture/{7623E87C-45BB-40C3-9E99-679A87F87DD9}.png)
+> os应该提供哪些功能，才能便于用户、程序使用文件？
+  - 创建（creat）、读（read）、写（write）、删除（delete）、打开（open）、关闭（close）...都是系统调用
+    ![alt text](/操作系统/picture/{67AF7AB5-BFED-484C-B4E9-B9E516162C21}.png)    
+> 文件数据怎么存放在磁盘上？
+  - 类似内存
+    ![alt text](/操作系统/picture/{6F086C38-38ED-475C-9FB4-8B7F87B362FE}.png)
+    ![alt text](/操作系统/picture/{A745A5C2-2552-42B2-B9F8-91DB99F77DEB}.png)
+> 其他需要操作系统实现的文件管理功能
+    ![alt text](/操作系统/picture/{7E480824-24F1-4448-98A8-641C4924EC41}.png)
+### 总结
+![alt text](/操作系统/picture/{EF8F8E79-AE37-465E-B1C3-D31693748611}.png)
+
+## 二、文件的逻辑结构
+![alt text](/操作系统/picture/{8A816883-F1BA-4B57-9F13-234FD597C3F0}.png)
+1. 无结构文件
+文件由一系列二进制文件流组成
+2. 有结构文件（记录式文件）
+![alt text](/操作系统/picture/{D0A81190-5CBB-4007-BD89-E2B86DC16153}.png)
+### 1.顺序文件
+![alt text](/操作系统/picture/{8D1032E9-7D10-490B-8386-5FB42682938B}.png)
+![alt text](/操作系统/picture/{1B89F695-2852-400E-9105-BFA00595ED86}.png)
+### 2.索引文件
+![alt text](/操作系统/picture/{B30D07A5-B691-4F64-ABF6-06B53C5E32EE}.png)
+### 3.索引顺序文件
+![alt text](/操作系统/picture/{DB46E4FF-95E4-4860-9BAB-A02684BDCC0D}.png)
+![alt text](/操作系统/picture/{776715B1-A5E2-40EF-B2FD-8758474A4BB6}.png)
+![alt text](/操作系统/picture/{8570435F-BC25-4E49-AB54-98BCFB8C4593}.png)
+### 4.总结
+![alt text](/操作系统/picture/{76331A17-E832-4943-B182-0FF47C5D49C3}.png)
+
+## 三、文件目录
+![alt text](/操作系统/picture/{660F92DE-437B-47D5-831A-A49F3DD04EF4}.png)
+### 1.文件控制块（FCB）
+![alt text](/操作系统/picture/{41A665B4-11D7-4771-9A14-5D10955D93D5}.png)
+![alt text](/操作系统/picture/{7800FF19-3829-4930-98DF-B48DF18BE4F7}.png)
+![alt text](/操作系统/picture/{9B7D56C8-5946-411A-812E-B457AEAC8538}.png)
+### 2.目录结构--单级目录结构
+![alt text](/操作系统/picture/{327C8449-463E-4D0A-B7C8-BD88FB0EFDFC}.png)
+### 3.目录结构--两级目录结构
+![alt text](/操作系统/picture/{E13F7E12-4D5A-4D80-A72E-27E08A4453AD}.png)
+### 3.目录结构--多级目录结构（树形目录结构）
+![alt text](/操作系统/picture/{FD4858C5-32D2-416A-A8A3-B03BD032EAD9}.png)
+![alt text](/操作系统/picture/{93A446D9-C377-48DF-820A-E379E7459A2B}.png)
+> 树形目录结构可以方便的对文件进行分类，层次结构清晰，也可以更有效的对文件进行管理和保护。但是，树形结构不便于实现文件的共享。为此，提出了“无环图目录结构”。
+### 4.目录结构--无环图目录结构
+![alt text](/操作系统/picture/{403265D0-BA68-4431-9B7C-25862CE1E8CB}.png)
+### 5.索引节点（FCB的改进）
+![alt text](/操作系统/picture/{D1644090-8E96-42D7-A534-0CDF1F82E6B6}.png)
+![alt text](/操作系统/picture/{17456BAF-ABBA-4411-97B2-772B75F9F9ED}.png)
+### 6.总结
+![alt text](/操作系统/picture/{0F84BE06-B4F9-4733-A7E0-87A5885710BB}.png)
+
+## 四、文件的物理结构（文件分配方式）
+文件数据怎么存放在外存中。
+### 1.文件快、磁盘块
+![alt text](/操作系统/picture/{842131E2-ED17-4247-91BA-4547462588B1}.png)
+![alt text](/操作系统/picture/{D7A58F91-0021-4A07-B908-3477DFBBAF01}.png)
+### 2.文件分配方式
+1. 连续分配
+    连续分配方式要求每个文件在磁盘上占有一组连续的块，读写入内存很快，但对文件的拓展不方便，有很多磁盘碎片
+    ![alt text](/操作系统/picture/{9C1A00AF-427A-4411-8A86-8CBC0344FBB4}.png)
+    ![alt text](/操作系统/picture/{69019780-A05E-42CD-A1DD-52CE4EE9CAC2}.png)
+    ![alt text](/操作系统/picture/{5B90A39E-04DE-4F6E-99FE-B152EF74C954}.png)
+    ![alt text](/操作系统/picture/{8C85F907-2292-4117-B938-351FBD6C6355}.png)
+2. 链接分配
+   - 隐式分配：采用链接分配方式的文件，只支持顺序访问，不支持随机访问，方便拓展
+    ![alt text](/操作系统/picture/{E20DA916-C61C-4ACF-8225-4B593BB85295}.png)
+    ![alt text](/操作系统/picture/{392B836B-F44E-40B4-A72E-5F4743508F5F}.png)
+   - 显示分配：文件分配表显式记录下一块物理块的位置，方便拓展，支持随机访问，文件表会占内存空间
+    ![alt text](/操作系统/picture/{A82B8D63-7082-4385-8C43-841538A10DCE}.png)
+    ![alt text](/操作系统/picture/{C251CD60-F36F-4283-B702-B01C860E1BD6}.png)
+   - 总结
+    ![alt text](/操作系统/picture/{7578D72F-7D89-46FD-8B08-EA33DDF37D37}.png)
+3. 索引分配
+   - 索引分配允许文件离散地分配在各个磁盘块中，系统会为每个文件建立一张索引表，索引表记录了文件的各个逻辑块对应的物理块
+    ![alt text](/操作系统/picture/{BDD2B2F1-8907-472A-95EC-A13198D8FFC0}.png)
+   - 如何实现逻辑块号到物理块号的转换
+    ![alt text](/操作系统/picture/{01A82503-EA32-469C-A1E9-0C2993D73BFB}.png)
+   - ![alt text](/操作系统/picture/{85648053-057A-49D3-A8C5-B1E8BAA90D10}.png)
+     - 1. 链接方案
+        ![alt text](/操作系统/picture/{177806D7-6B74-4E29-B036-E585563768EB}.png)
+     - 2. 多层索引  
+        ![alt text](/操作系统/picture/{FB862727-C670-4470-9DD6-3A394CE1472C}.png)
+     - 3. 混合索引
+        ![alt text](/操作系统/picture/{FB30CDDD-66B2-4DB2-A6B0-750AE9FB83A1}.png)
+   - 总结
+    ![alt text](/操作系统/picture/{02DC505A-C38D-41C6-AF6A-0FDDC8D0F10A}.png)
+### 3.总结
+![alt text](/操作系统/picture/{6F58B603-3E2B-4C96-A1EC-9B39A1F5896E}.png)
+
+## 五、逻辑结构vs.物理结构
+![alt text](/操作系统/picture/{A5C3451C-192B-442E-9CA7-DCCA8DFEAA85}.png)
+![alt text](/操作系统/picture/{05B15710-79B5-46A1-AD2A-123A7F5FB0B7}.png)
+
+## 六、文件存储空间管理
+对空闲磁盘空间的管理
+### 1.存储空间的划分与初始化
+![alt text](/操作系统/picture/{06151532-A23C-42B6-AB28-5AE6318FFEC2}.png)
+### 2.存储空间管理
+1. 空闲表法
+    首位置+长度，回收时注意修改。适用于连续分配方式
+    ![alt text](/操作系统/picture/{8F083A36-7156-4F3E-A910-7B5D039F46B2}.png)
+2. 空闲链表法
+    ![alt text](/操作系统/picture/{2ADFED5D-1E9D-4141-BE23-14DC5F8E4F3F}.png)
+    1. 空闲盘块链
+        ![alt text](/操作系统/picture/{B1D4A6F1-88CB-4AB2-99FB-77735ADD8A43}.png)
+    2. 空闲盘区链
+        ![alt text](/操作系统/picture/{3F932E59-9EA5-4A52-96FC-C5067E57FF35}.png)
+3. 位示图法
+    ![alt text](/操作系统/picture/{E78C569B-2825-494B-9CA5-ED5B26AF5A7A}.png)
+3. 成组链接法
+    文件卷的目录区中专门用一个磁盘块作为超级块，当系统启动时需要将超级内存块读入内存。并且保证内存与外存中的超级块数据一致。
+    ![alt text](/操作系统/picture/{3F4F83EB-1A48-4704-B188-AA22BFD64C5E}.png)
+### 3.总结
+![alt text](/操作系统/picture/{E4D02A9D-F053-45E6-A83A-B6ECE464EB02}.png)
+
+## 七、文件的基本操作
+### 1.创建文件
+![alt text](/操作系统/picture/{5787B09D-D491-4FC9-8DA5-F4CEEBCEE305}.png)
+### 2.删除文件
+![alt text](/操作系统/picture/{231D0ADB-555D-4081-B421-BA07B0F119D3}.png)
+### 3.打开文件
+![alt text](/操作系统/picture/{32627108-4A4C-4BDA-AC7B-0115BBAFAB13}.png)
+- 系统的打开文件表（整个系统只有一张）
+- 进程的打开文件表
+![alt text](/操作系统/picture/{5C15B0BF-88E7-44F9-8811-1C95D85B294D}.png)
+### 4.关闭文件
+![alt text](/操作系统/picture/{9CBF3049-4CF5-4476-85E0-F8256D8F6670}.png)
+### 5.读文件
+![alt text](/操作系统/picture/{DBD6717F-7D2F-4CBB-80F1-94E94B9AB33C}.png)
+### 6.写文件
+![alt text](/操作系统/picture/{2C5A39F6-1E7F-42EA-9DA0-EDF3E5399360}.png)
+### 7.总结
+![alt text](/操作系统/picture/{B6E3014C-602F-449D-A0D4-A1AD6BF199DE}.png)
+
+## 八、文件共享
+![alt text](/操作系统/picture/{23D75C12-0EEA-4ECF-8BD4-4C71DDA6A446}.png)
+### 1.基于索引节点的共享方式（硬链接）
+![alt text](/操作系统/picture/{DFF00675-28CA-4A31-B411-F7270A3DA777}.png)
+### 2.基于符号链的共享方式（软链接）
+![alt text](/操作系统/picture/{FAB1856F-B7DC-4848-A15A-FC5697E85C29}.png)
+> 删除一个文件，会导致软链接的路径找不到路径，软链接就会失效。
+> 软链接访问共享文件要查询多级目录，需要多次磁盘I/O
+### 3.总结
+![alt text](/操作系统/picture/{19FDD855-EB6D-43B1-932E-5FAA667FB4F6}.png)
+
+## 九、文件保护
+### 1.方法
+1. 口令保护
+![alt text](/操作系统/picture/{02D96489-487A-450F-BD02-2A1471AA7C74}.png)
+2. 加密保护
+![alt text](/操作系统/picture/{E089B916-6E30-4481-8120-0B60673849E0}.png)
+> 优点：保密性强，不需要再系统中存储密码
+> 缺点：编译/译码，或者说加密/解密需要花费一定时间
+3. 访问控制
+![alt text](/操作系统/picture/{2E31EC49-F4CC-462B-AFCC-1EAE8D2B25E1}.png)
+### 2.总结
+![alt text](/操作系统/picture/{AC94ABAF-9F64-4C6C-A244-EBC3F7D1916A}.png)
+
+## 十、文件系统的层次结构
+![alt text](/操作系统/picture/{8314C225-8C62-465F-B781-F9045AE68E7A}.png)
+### 例子
+![alt text](/操作系统/picture/{9236D78A-6639-4001-9696-30B776412EBA}.png)
+
+## 十一、文件系统的全局结构（布局）
+### 文件系统在外存中的结构
+1. 物理格式化
+![alt text](/操作系统/picture/{0F0A9732-54F2-4406-8159-3DF956B25C6A}.png)
+2. 逻辑格式化
+![alt text](/操作系统/picture/{BE6AEB08-CA60-4EB1-B9DB-2E5A02169049}.png)
+### 文件系统在内存中的结构
+![alt text](/操作系统/picture/{F644E1EF-6343-454E-9BA1-400A93B98463}.png)
+![alt text](/操作系统/picture/{D1DC8158-E7B6-4A0C-8367-B1FBB72CA079}.png)
+
+## 十二、虚拟文件系统、文件系统挂载（安装）
+### 1.虚拟文件系统（VFS）
+![alt text](/操作系统/picture/{1EF787B2-2935-4F1C-9212-72E6CD07022F}.png)
+![alt text](/操作系统/picture/{8BF3838C-2547-44C3-8790-D30292EDFBCC}.png)
+> 对上提供同一接口
+> 对下要求各硬件实现VFS的要求
+![alt text](/操作系统/picture/{889EA896-7F81-4CD5-AB29-4924448F43E8}.png)
+![alt text](/操作系统/picture/{14974ABA-3970-4A73-820C-2E9AC19B3B33}.png)
+![alt text](/操作系统/picture/{710C8994-0617-46D9-8129-156459C3AD6E}.png)
+### 2.文件系统挂载
+![alt text](/操作系统/picture/{21A3AB54-E270-4216-BEA1-2971CD029366}.png)
