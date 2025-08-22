@@ -16,16 +16,7 @@ public:
         {
             for (auto &b : nums2)
             {
-                sum = a + b;
-                auto it = map.find(sum);
-                if (it != map.end())
-                {
-                    it->second++;
-                }
-                else
-                {
-                    map.insert({sum, 1});
-                }
+                ++map[a + b];
             }
         }
 

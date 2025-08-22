@@ -1226,3 +1226,226 @@ Pi(){     //i号哲学家的进程
 ![alt text](/操作系统/picture/{710C8994-0617-46D9-8129-156459C3AD6E}.png)
 ### 2.文件系统挂载
 ![alt text](/操作系统/picture/{21A3AB54-E270-4216-BEA1-2971CD029366}.png)
+
+# 第五章、设备管理
+
+## 一、I/O设备的概念及分类
+### 1.什么是I/O设备
+I/O就是输入/输出（input/output）
+I/O设备就是可以将数据输入到计算机，或者可以接受计算机输出数据的外部设备，属于计算机中的硬件部件。  
+例如：键盘、鼠标是输入设备，显示器是输出设备，移动硬盘可输入、也可输出   
+UNIX系统将外部设备抽象为一种特殊的文件，用户可以使用与文件操作相同的方式对外部设备进行操作。  
+### 2.I/O设备分类
+- 按使用特性
+    1. 人机交互式外部设备
+    2. 存储设备
+    3. 网络通信设备
+- 按传输速率
+    1. 低速设备（鼠标键盘）
+    2. 中速设备（打印机）
+    3. 高速设备（磁盘）
+- 按信息交换的单位
+    1. 块设备：如磁盘等，基本传输单位为块，传输速率较高，可寻址，即可对它随机地读/写任一块
+    2. 字符设备：鼠标、键盘等，数据传输地基本单位是字符，传输速率较慢，不可寻址，在输入/输出时常采用中断驱动方式
+### 3.总结
+![alt text](/操作系统/picture/{CE2CF8E4-4C03-46A5-B12C-AE3ABBE5727E}.png)
+
+### 二、I/O控制器
+![alt text](/操作系统/picture/{B447B723-8EAC-46C0-8751-5F5DC98EC2A8}.png)
+机械部件主要用来执行具体地I/O操作  
+电子部件（I/O控制器）通常是一块插入主板扩充槽地印刷电路板
+### 功能
+![alt text](/操作系统/picture/{1ADF6409-FFE4-4B15-AC42-98B154668758}.png)
+### 组成
+![alt text](/操作系统/picture/{FDBE1C10-518F-4081-AF45-8646DF4C5006}.png)
+![alt text](/操作系统/picture/{4068A20B-F910-488B-A173-21897AB1D121}.png)
+1. 内存映像I/O vs. 独立编址
+    ![alt text]({3CCF1B32-6238-49C9-BECB-C2D53C13B4BE}.png)
+### 总结
+![alt text](/操作系统/picture/{4E2A9DCD-E438-40E6-87DE-17DBA5CB4006}.png)
+
+### 三、I/O控制方式
+![alt text](/操作系统/picture/{D9DCCAEA-660F-4D98-AE5B-1D012F95DD0C}.png)
+### 1.程序直接控制方式
+![alt text](/操作系统/picture/{9FB2D806-CF90-46F7-8608-CD91A088C200}.png)
+![alt text](/操作系统/picture/{A99F601F-D89C-4C58-93FF-951452AF0437}.png)
+### 2.中断驱动方式
+![alt text](/操作系统/picture/{BA53B13F-FBD9-45F3-97F3-D67EFDF043F8}.png)
+![alt text](/操作系统/picture/{1E9526B4-400B-439E-B790-AD4B795E0B6D}.png)
+### 3.DMA方式
+![alt text](/操作系统/picture/{DA6AAE5D-3F17-4913-93AE-2DE1B84CD427}.png)
+- DMA控制器组成
+    ![alt text](/操作系统/picture/{76CFF2FD-DC61-4C37-81E9-0C4AA7629850}.png)
+    > 实际也是一个字一个字读，只是I/O先将读取地字放在数据寄存器中，完成了一个块地内容，在统一传输给内存
+![alt text](/操作系统/picture/{53EDE585-C9A6-4734-B53F-1AA3B426C52C}.png)
+### 4.通道控制方式
+![alt text](/操作系统/picture/{3B772D87-C5BE-48E4-A352-675EF8D0122F}.png)
+![alt text](/操作系统/picture/{AF139809-4EB8-4D96-A098-3347929BCA64}.png)
+### 5.总结
+![alt text](/操作系统/picture/{CF2C9809-A95C-4692-943B-AE8F37031C0B}.png)
+
+## 四、I/O软件地层次结构
+![alt text](/操作系统/picture/{C7A34D0E-23F1-4990-AC35-250FB9773A70}.png)
+### 1.用户层软件
+![alt text](/操作系统/picture/{F5644649-F192-43B0-86DA-4B70B77E80A0}.png)
+### 2.设备独立性软件
+又称 设备无关软件。与设备的硬件特性无关的功能几乎都在这一层实现。
+- 主要实现的功能：
+    1. 向上层提供统一的调用接口。（如：read/write系统调用）
+    2. 设备的保护。（原理类似于对文件的保护，设备会被看成一种特殊的文件，不同用户对设备的访问权限不同）
+    3. 差错处理。（对一些设备的错误进行处理）
+    4. 设备的分配与回收。
+    5. 建立逻辑设备名到物理设备名的映射关系；根据设备类型选择调用相应的驱动程序。
+    ![alt text](/操作系统/picture/{16A9E2FA-FFFC-4D68-9D4B-813B371A7C52}.png)
+    两种方式管理逻辑设备表（LUT）：
+    ![alt text](/操作系统/picture/{528658F3-8923-4D3D-A260-601B14E78D42}.png)
+    思考：为什么不同地设备需要不同地设备驱动程序？
+    不同型号地设备内部硬件特性不同，这些特性只有厂家知道，因此厂家需要提供与设备相对应地驱动程序，CPU只需执行驱动程序来完成设置设备寄存器，检查设备状态等工作。
+### 3.设备驱动程序
+主要负责对硬件设备的具体控制，将上层发出的一系列命令转化为特定设备听得懂的操作。（类似编译）。包括检查设备状态等。
+> 驱动程序一般以一个独立进程地方式存在
+![alt text](/操作系统/picture/{14CC499D-0CA1-4F3C-8F23-5508B99FFE13}.png)
+### 4.中断处理程序
+**中断处理程序会与硬件直接打交道。**
+![alt text](/操作系统/picture/{EE7356DE-6805-4543-B8EF-63E5A76001B6}.png)
+### 5.总结
+![alt text](/操作系统/picture/{DEBD2790-2C00-4FFE-AD1A-A835B55A1A1D}.png)
+> 设备驱动程序和中断处理程序会与硬件直接打交道
+
+## 五、输入/输出应用程序接口，设备驱动程序接口
+![alt text](/操作系统/picture/{CFCCAECF-C2D8-4635-A277-7A5A9C43C7D5}.png)
+### 1.输入/输出应用程序接口
+用户层地应用程序无法用一个统一地系统调用接口来完成所有类型地设备地I/O。所以制定了三种I/O应用程序接口。
+![alt text](/操作系统/picture/{C415ED43-AD96-4DCA-BC8F-2E3F16EC34F7}.png)
+![alt text](/操作系统/picture/{08EA7BBB-7814-485D-9E8D-31716032FEB1}.png)
+![alt text](/操作系统/picture/{436F178A-5FDB-43F2-93EB-04A260F6AB5B}.png)
+### 2.设备驱动程序接口
+统一标志的设备驱动程序接口，避免各厂商提供地驱动程序接口不一致，从而造成操作系统无法支持、使用
+![alt text](/操作系统/picture/{039424E8-9CA0-44D2-A831-A86F4752557E}.png)
+
+## 六、I/O核心子系统
+![alt text](/操作系统/picture/{09A1A676-33B4-40DF-A354-DF32F3C5E13D}.png)
+![alt text](/操作系统/picture/{7A5044E6-E7D5-42D1-B66F-9CD27F7781D4}.png)
+
+## 七、假脱机技术（SPOOLing技术）
+### 1.什么是脱机技术
+![alt text](/操作系统/picture/{1632C4DB-2B27-435F-A487-FEEA6A4E2A1A}.png)
+### 2.假脱机技术
+![alt text](/操作系统/picture/{277BE93C-EB7D-499A-B2DE-2CFF178087A3}.png)
+![alt text](/操作系统/picture/{4863243C-6EA2-441A-AE22-768229D93E98}.png)
+> 输入/输出缓冲区是用于暂存从输入/输出设备输入地数据
+![alt text](/操作系统/picture/{E6F8A7FB-0DBA-43C4-A204-4B4023720B80}.png)
+### 3.共享打印机原理分析
+![alt text](/操作系统/picture/{A3EC2504-A5ED-41E1-9471-7986F19777BE}.png)
+![alt text](/操作系统/picture/{159C6924-B0BC-48AE-9030-35F55496EC3B}.png)
+![alt text](/操作系统/picture/{710DB515-EFB9-4D01-BA10-0657A61D9587}.png)
+### 4.总结
+![alt text](/操作系统/picture/{E8C6DA00-2064-4AE3-8E94-30450B3ED539}.png)
+
+## 八、设备的分配和回收
+![alt text](/操作系统/picture/{5C979154-544E-4958-ABEE-1C87AC619E9B}.png)
+### 1.设备分配时应考虑的因素
+1. 设备固有属性
+    ![alt text](/操作系统/picture/{DB14077C-CC93-4B6C-BF7F-4DD94F22F6C7}.png)
+2. 设备分配算法
+    ![alt text](/操作系统/picture/{4E3BD2E0-40F3-4EE5-967F-911A721CC918}.png)
+3. 静态分配和动态分配
+    ![alt text](/操作系统/picture/{5E782CB8-CAAF-4352-B8B9-05B17A211D22}.png)
+### 2.设备分配中的数据结构
+![alt text](/操作系统/picture/{69781DDC-4BC0-490A-A000-1761D1B7E507}.png)
+![alt text](/操作系统/picture/{67FB18EB-CD69-4CFA-B81F-7DE2C6382D55}.png)
+![alt text](/操作系统/picture/{D154DFBF-45BD-4225-A898-70882EED0B5E}.png)
+![alt text](/操作系统/picture/{91976021-D2F8-4B6F-95BD-3FD631E44D95}.png)
+![alt text](/操作系统/picture/{2673FEF0-AC25-4F21-A86D-8F9457FE15BF}.png)
+### 3.设备分配的步骤
+![alt text](/操作系统/picture/{A22F6B46-56EB-4868-8A4E-C61D7D8447BE}.png)
+![alt text](/操作系统/picture/{643A6DD0-DCEF-47F5-9954-339344E191CC}.png)
+![alt text](/操作系统/picture/{78A8F6DC-D22C-411D-A070-D38B2BCF6EEA}.png)
+### 4.总结
+![alt text](/操作系统/picture/{DF9D2D28-EE92-4EB4-88D9-45C9F5A96D51}.png)
+
+## 九、缓冲区管理
+![alt text](/操作系统/picture/{90A8B411-A286-4171-B1F1-51EC5E7C6236}.png)
+### 1.缓冲区的作用
+![alt text](/操作系统/picture/{3EC3AA38-A3D8-44A0-AD52-C193B7D9B96D}.png)
+### 2.单缓冲
+![alt text](/操作系统/picture/{95733FCA-3097-4D7B-BF55-5A7E5C533525}.png)
+![alt text](/操作系统/picture/{E5708548-AC15-444B-B9E9-F375BC278048}.png)
+> 单缓冲策略，处理一块数据平均耗时：max（C，T） + M
+### 3.双缓冲
+![alt text](/操作系统/picture/{3A1BCCAB-5789-442A-8D19-C13C914BEB36}.png)
+![alt text](/操作系统/picture/{122F4EE8-62BC-4FFC-9BF1-AC14FF0E712C}.png)
+![alt text](/操作系统/picture/{F3991F24-4820-4B11-81C2-6218BFF85B30}.png)
+- 单/双缓冲在通信时的区别
+    ![alt text](/操作系统/picture/{B23EA52E-D9C7-4574-BCEE-84469E8F86E5}.png)
+    ![alt text](/操作系统/picture/{3520D597-D00E-479B-9E7A-062ED9150FD7}.png)
+### 4.循环缓冲区
+![alt text](/操作系统/picture/{62D712D0-BD77-484D-999B-CEDA30667426}.png)
+### 5.缓冲池
+![alt text](/操作系统/picture/{F1BF0FB7-D833-4E0A-B625-49552DBD5C77}.png)
+### 6.总结
+![alt text](/操作系统/picture/{6E14ADF9-FCE5-4BEE-9843-04AB993ABAB8}.png)
+
+## 十、磁盘的结构
+### 1.磁盘、磁道、扇区
+![alt text](/操作系统/picture/{9B0AC1F8-84C5-493D-B612-BDFED944FAEA}.png)
+### 2.如何在磁盘中读/写数据
+![alt text](/操作系统/picture/{4C610DD9-30BB-4028-ACFD-BCE6EA0F1152}.png)
+### 3.盘面、柱面
+![alt text](/操作系统/picture/{F512A851-8F0B-45B9-90A2-6AF23B3AF333}.png)
+### 4.磁盘分类
+![alt text](/操作系统/picture/{D97F9ED2-7522-4DA6-9488-A7AD9CA30BB8}.png)
+![alt text](/操作系统/picture/{88DBA181-F33A-4D37-BAD5-6E9FC281D8CC}.png)
+### 5.总结
+![alt text](/操作系统/picture/{A00F5121-353A-4FD0-B956-F9828E51822F}.png)
+
+## 十一、磁盘调度算法
+![alt text](/操作系统/picture/{1AAF6194-F93A-49EB-955E-618C8B247448}.png)
+### 1.一次磁盘读/写需要的时间
+![alt text](/操作系统/picture/{6758EC54-420C-4911-A089-E9D205D6F6D0}.png)
+### 2.先来先服务（FCFS）
+![alt text](/操作系统/picture/{2793DF60-59FC-4BAC-A62B-6D05769C5BDD}.png)
+### 3.最短寻找时间优先（SSTF）
+![alt text](/操作系统/picture/{70C2EA58-5A4B-4603-8097-20F7F69248E8}.png)
+### 4.扫描算法（SCAN）
+![alt text](/操作系统/picture/{22E67690-E9F7-4DAA-8118-C1CBD502B53A}.png)
+### 5.LOOK调度算法
+![alt text](/操作系统/picture/{FDEDD0C9-366F-410B-9D2A-27FA800967B7}.png)
+### 6.循环扫描算法（C-SCAN）
+![alt text](/操作系统/picture/{B4BFF5CE-4C82-4F58-950D-8CC0E15014BE}.png)
+### 7.C-LOOK调度算法
+![alt text](/操作系统/picture/{C436884E-F1B3-4FBB-972D-47196CAC28FA}.png)
+### 8.总结
+![alt text](/操作系统/picture/{7C20B0CE-EFAD-45E0-83F2-9404AFB26E6E}.png)
+
+## 十二、减少延长时间的方法
+![alt text](/操作系统/picture/{9722DF75-5DAD-46A5-B1FC-260C2166BA1E}.png)
+### 1.交替编号
+![alt text](/操作系统/picture/{4FF1F9E9-D8DC-471E-8D85-F99F429CFB45}.png)
+### 2.磁盘地址结构的设计
+![alt text](/操作系统/picture/{5305C32A-2A2A-42FB-836C-BF57011BEBD8}.png)
+![alt text](/操作系统/picture/{BFCE5E43-05B8-4EA6-934F-655DFD78D8E5}.png)
+> 读取地址连续的磁盘块时，采用（柱面号，盘面号，扇区号）的地址结构可以减少磁头移动消耗的时间
+### 3.错位命名
+![alt text](/操作系统/picture/{78060A53-2BAF-4203-96E1-2D80EC697088}.png)
+![alt text](/操作系统/picture/{14AB08C0-96AD-4F93-867F-4CA2DEE1A21F}.png)
+### 4.总结
+![alt text](/操作系统/picture/{1764C683-524F-4D77-9247-E1F196C4871C}.png)
+
+## 十三、磁盘的管理
+![alt text](/操作系统/picture/{3419C7AB-D921-4ADA-BA14-8517D8B25F9D}.png)
+### 1.磁盘的初始化
+![alt text](/操作系统/picture/{8BC36285-8B97-409E-849D-A0BF2065EE40}.png)
+### 2.引导块
+![alt text](/操作系统/picture/{1DF847BA-AE02-43DB-BE46-20C7A8E23EA3}.png)
+![alt text](/操作系统/picture/{5A920B79-2259-48C6-A6F4-41DCEC04AE97}.png)
+### 3.坏块的管理
+![alt text](/操作系统/picture/{8C16D25F-DF62-40E5-8665-2E9B09CAB461}.png)
+### 4.总结
+![alt text](/操作系统/picture/{9777BBE4-71A0-472A-B667-6D571AF75D37}.png)
+
+## 十四、固态硬盘（SSD）
+![alt text](/操作系统/picture/{7AECD7C1-33BE-417A-A43D-16A121481B2E}.png)
+### 固态硬盘结构
+![alt text](/操作系统/picture/{1AFBD045-161D-4329-8DED-A3E0C2801C3E}.png)
+![alt text](/操作系统/picture/{FD80A18D-C2DF-4AE7-B73A-61075503E0F3}.png)
